@@ -1,5 +1,8 @@
 # Programozás alapjai 2. (villamosmérnök) órai kódrészletek
 
+Az itt olvasható tartalmak Linux rendszerekre vonatkoznak.
+Windows cmd-ből is futtathatók a Visual Studio-val vagy más IDÉ-vel fordított állományok, de `./` nélkül kell hívni.
+
 ## C programok fordítása és futtatása
 
 Fordítás:
