@@ -1,55 +1,44 @@
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <climits>
 
-int find_max(int l[], int len, int& max_pos) {
-    max_pos = 0;
-    int i;
-    for(i=1; i<len; i++) {
-        if(l[max_pos] <= l[i]) max_pos = i;
+
+int find_max(const int t[], int len, int& pos) {
+    pos = 0;
+    for(int i=1; i<len; i++) {
+        if(t[pos] <= t[i]) pos = i;
     }
-    return l[max_pos];
+    return t[pos];
 }
 
-void find_nmax1(int l[], int len, int N, int* nmax, int* max_pos) {
-    int i;
-    for(i=0; i<N; i++) {
-        nmax[i] = find_max(l, len, max_pos[i]);
-        l[max_pos[i]] = INT_MIN;
-
+void find_nmax(int t[], int len, int N, int pos[], int max[]) {
+    for(int i=0; i<N; i++) {
+        max[i] = find_max(t, len, pos[i]);
+        t[pos[i]] = INT_MIN;
     }
-}
-
-void find_nmax2(int l[], int len, int N, int* nmax, int* max_pos) {
-    int* l_cpy = (int*)malloc(sizeof(int)*len);
-    int i;
-    for(i=0; i<len; i++) l_cpy[i] = l[i];
-    find_nmax1(l_cpy, len, N, nmax, max_pos);
-    free(l_cpy);
 }
 
 int main(int argc, char* argv[]) {
-    int* l = (int*)malloc(sizeof(int) * (argc-1));
-    int i;
-    int list_len = argc-2;
+    if(argc < 3) {
+        fprintf(stderr, "Usage: %s <N> <input_list>\n", argv[0]);
+        return -1;
+    }
     int N = atoi(argv[1]);
-    for(i=0; i<list_len; i++) {
-        l[i] = atoi(argv[i+2]);
-    }
-    int* max_pos = (int*)malloc(sizeof(int)*list_len);
-    int* max_elem = (int*)malloc(sizeof(int)*list_len);
-    find_nmax2(l, list_len, N, max_elem, max_pos);
-    for(i=0; i<N; i++) {
-        printf("%d-th largest element: [%d], occurs at position [%d]\n", i+1, max_elem[i], max_pos[i]);
-    }
+    int len = argc-2;
+    int* t = (int*)malloc(sizeof(int)*(len));
 
-    printf("\nOriginal list:\n");
-    for(i=0; i<list_len; i++) {
-        printf("%d ", l[i]);
-    }
-    printf("\n");
+    for(int i=0; i<len; i++) t[i] = atoi(argv[i+2]);
 
-    free(l);
-    free(max_pos);
-    free(max_elem);
+    int* pos = (int*)malloc(sizeof(int)*N);
+    int* max = (int*)malloc(sizeof(int)*N);
+    find_nmax(t, len, N, pos, max);
+
+    for(int i=0; i<N; i++)
+        printf("%d-th max: [%d], last occurs at position [%d]\n", i+1, max[i], pos[i]);
+
+    // HF: find_nmax2, ami lemasolja a tombot es nem modositja az eredetit
+    free(max);
+    free(pos);
+    free(t);
 }

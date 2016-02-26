@@ -1,24 +1,30 @@
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 
-double find_max(double l[], int len, int& max_pos) {
-    max_pos = 0;
-    int i;
-    for(i=1; i<len; i++) {
-        if(l[max_pos] <= l[i]) max_pos = i;
+
+int find_max(const int t[], int len, int& pos) {
+    pos = 0;
+    for(int i=1; i<len; i++) {
+        if(t[pos] <= t[i]) pos = i;
     }
-    return l[max_pos];
+    return t[pos];
 }
 
 int main(int argc, char* argv[]) {
-    double* l = (double*)malloc(sizeof(double) * (argc-1));
-    int i;
-    int list_len = argc-1;
-    for(i=0; i<list_len; i++) {
-        l[i] = atof(argv[i+1]);
+    if(argc < 2) {
+        fprintf(stderr, "Usage: %s <input_list>\n", argv[0]);
+        return -1;
     }
-    int max_pos;
-    double max_elem = find_max(l, list_len, max_pos);
-    printf("Maximum element: [%2.2lf] last occurs at position [%d]\n", max_elem, max_pos);
-    free(l);
+    int len = argc-1;
+    int* t = (int*)malloc(sizeof(int)*(len));
+
+    for(int i=0; i<len; i++) t[i] = atoi(argv[i+1]);
+
+    int pos;
+    int max = find_max(t, len, pos);
+
+    printf("Max: [%d], last occurs at position [%d]\n", max, pos);
+
+    free(t);
 }
