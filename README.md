@@ -1,3 +1,5 @@
+[KisZH eredmények](http://avalon.aut.bme.hu/~judit/results/villprog2_2016.txt)
+
 # Programozás alapjai 2. (villamosmérnök) órai kódrészletek
 
 Az itt olvasható tartalmak Linux rendszerekre vonatkoznak.
